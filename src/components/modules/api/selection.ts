@@ -15,6 +15,8 @@ export default class SelectionAPI extends Module {
     return {
       findParentTag: (tagName: string, className?: string) => this.findParentTag(tagName, className),
       expandToTag: (node: HTMLElement) => this.expandToTag(node),
+      getParentBlock: (selection: Selection) => this.getParentBlock(selection),
+      hasOverlap: (selection: Selection, nodes: NodeList) => this.hasOverlap(selection, nodes),
     };
   }
 
@@ -34,6 +36,23 @@ export default class SelectionAPI extends Module {
    */
   public expandToTag(node: HTMLElement): void {
     new SelectionUtils().expandToTag(node);
+  }
+
+  /**
+   * Gets the block in which the selection resides
+   * @param {Selection} selection
+   */
+  public getParentBlock(selection: Selection): HTMLElement|null {
+    return SelectionUtils.getParentBlock(selection);
+  }
+
+  /**
+   * Check if selection intersects with any of the nodes in NodeList
+   * @param {Selection} selection
+   * @param {NodeList} nodes
+   */
+  public hasOverlap(selection: Selection, nodes: NodeList): Node|null {
+    return SelectionUtils.hasOverlap(selection, nodes);
   }
 
 }

@@ -543,8 +543,16 @@ export default class InlineToolbar extends Module {
    * Check Tools` state by selection
    */
   private checkToolsState(): void {
+    let hasMath = false;
+    const selection = SelectionUtils.get();
+    const parentBlock = SelectionUtils.getParentBlock(selection);
+    if (!!parentBlock) {
+      const mathNodes = parentBlock.querySelectorAll('span.inline-math');
+      hasMath = !!SelectionUtils.hasOverlap(selection, mathNodes);
+    }
+
     this.tools.forEach((toolInstance) => {
-      toolInstance.checkState(SelectionUtils.get());
+      toolInstance.checkState(selection, hasMath);
     });
   }
 

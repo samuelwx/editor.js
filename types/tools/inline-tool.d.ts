@@ -19,8 +19,9 @@ export interface InlineTool extends BaseTool {
    * Get SelectionUtils and detect if Tool was applied
    * For example, after that Tool can highlight button or show some details
    * @param {Selection} selection - current Selection
+   * @param {boolean} hasMath - true if current Selection overlaps with a Math element
    */
-  checkState(selection: Selection): boolean;
+  checkState(selection: Selection, hasMath: boolean): boolean;
 
   /**
    * Make additional element with actions

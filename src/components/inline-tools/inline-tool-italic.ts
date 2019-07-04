@@ -70,12 +70,14 @@ export default class ItalicInlineTool implements InlineTool {
 
   /**
    * Check selection and set activated state to button if there are <i> tag
+   * Disables button if there are any inline-math overlapping the selection.
    * @param {Selection} selection
    */
-  public checkState(selection: Selection): boolean {
+  public checkState(selection: Selection, hasMath: boolean): boolean {
     const isActive = document.queryCommandState(this.commandName);
 
     this.nodes.button.classList.toggle(this.CSS.buttonActive, isActive);
+    this.nodes.button.disabled = hasMath;
     return isActive;
   }
 

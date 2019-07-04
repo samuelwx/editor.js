@@ -172,9 +172,10 @@ export default class LinkInlineTool implements InlineTool {
 
   /**
    * Check selection and set activated state to button if there are <a> tag
+   * Disables button if there are any inline-math overlapping the selection.
    * @param {Selection} selection
    */
-  public checkState(selection?: Selection): boolean {
+  public checkState(selection?: Selection, hasMath?: boolean): boolean {
     const anchorTag = this.selection.findParentTag('A');
 
     if (anchorTag) {
@@ -192,6 +193,10 @@ export default class LinkInlineTool implements InlineTool {
     } else {
       this.nodes.button.classList.remove(this.CSS.buttonUnlink);
       this.nodes.button.classList.remove(this.CSS.buttonActive);
+    }
+
+    if (hasMath !== undefined) {
+      this.nodes.button.disabled = hasMath;
     }
 
     return !!anchorTag;

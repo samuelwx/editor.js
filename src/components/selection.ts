@@ -239,6 +239,37 @@ export default class SelectionUtils {
     return window.getSelection();
   }
 
+  /**
+   * Gets the block in which the selection resides
+   *
+   * @param {Selection} selection
+   * @return {HTMLElement|null}
+   */
+  public static getParentBlock(selection: Selection): HTMLElement | null {
+    let el = selection.anchorNode.parentElement;
+    while (!el.className.includes('cdx-block')) {
+      el = el.parentElement;
+      if (el === null) { return null; }
+    }
+    return el;
+  }
+
+  /**
+   * Check if selection intersects with any of the nodes in NodeList
+   *
+   * @param {Selection} selection
+   * @param {NodeList} nodes
+   * @return {Node|null}
+   */
+  public static hasOverlap(selection: Selection, nodes: NodeList): Node | null {
+    for (const n of nodes) {
+      if (selection.containsNode(n, true)) {
+        return n;
+      }
+    }
+    return null;
+  }
+
   public instance: Selection = null;
   public selection: Selection = null;
 
